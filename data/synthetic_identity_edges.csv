@@ -1,0 +1,11 @@
+source,target,relationship,source_type,target_type,is_privileged
+alex,HELPDESK,MemberOf,User,Group,false
+HELPDESK,WS-ADMIN,AdminTo,Group,Computer,false
+WS-ADMIN,svc_backup,Session,Computer,User,false
+svc_backup,SERVER-OPS,MemberOf,User,Group,false
+SERVER-OPS,DC-LAB,AdminTo,Group,Computer,true
+jordan,APP-OPS,MemberOf,User,Group,false
+APP-OPS,APP01,AdminTo,Group,Computer,false
+APP01,svc_sql,Session,Computer,User,false
+svc_sql,DB-ADMINS,MemberOf,User,Group,false
+DB-ADMINS,SQL01,AdminTo,Group,Computer,true
