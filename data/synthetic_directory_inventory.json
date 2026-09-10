@@ -1,0 +1,62 @@
+[
+  {
+    "name": "adm-alex",
+    "object_type": "user",
+    "privileged": true,
+    "enabled": true,
+    "mfa_required": false,
+    "password_never_expires": false,
+    "stale_days": 4,
+    "unconstrained_delegation": false,
+    "reversible_password_storage": false,
+    "owner": "Identity Operations"
+  },
+  {
+    "name": "svc-legacy-reporting",
+    "object_type": "service_account",
+    "privileged": false,
+    "enabled": true,
+    "mfa_required": true,
+    "password_never_expires": true,
+    "stale_days": 18,
+    "unconstrained_delegation": false,
+    "reversible_password_storage": false,
+    "owner": "Business Applications"
+  },
+  {
+    "name": "APP01$",
+    "object_type": "computer",
+    "privileged": false,
+    "enabled": true,
+    "mfa_required": true,
+    "password_never_expires": false,
+    "stale_days": 2,
+    "unconstrained_delegation": true,
+    "reversible_password_storage": false,
+    "owner": "Platform Engineering"
+  },
+  {
+    "name": "old-contractor",
+    "object_type": "user",
+    "privileged": false,
+    "enabled": true,
+    "mfa_required": true,
+    "password_never_expires": false,
+    "stale_days": 127,
+    "unconstrained_delegation": false,
+    "reversible_password_storage": false,
+    "owner": ""
+  },
+  {
+    "name": "krbtgt-lab-reference",
+    "object_type": "user",
+    "privileged": true,
+    "enabled": false,
+    "mfa_required": true,
+    "password_never_expires": false,
+    "stale_days": 0,
+    "unconstrained_delegation": false,
+    "reversible_password_storage": false,
+    "owner": "Identity Operations"
+  }
+]
