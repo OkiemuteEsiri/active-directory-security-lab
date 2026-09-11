@@ -1,0 +1,11 @@
+[
+  {"event_id":"evt-001","timestamp":"2026-09-10T08:00:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.15","success":false},
+  {"event_id":"evt-002","timestamp":"2026-09-10T08:01:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.15","success":false},
+  {"event_id":"evt-003","timestamp":"2026-09-10T08:02:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.15","success":false},
+  {"event_id":"evt-004","timestamp":"2026-09-10T08:03:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.15","success":false},
+  {"event_id":"evt-005","timestamp":"2026-09-10T08:04:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.15","success":false},
+  {"event_id":"evt-006","timestamp":"2026-09-10T08:05:00Z","principal":"svc-build","event_type":"logon_failure","source":"10.10.20.16","success":false},
+  {"event_id":"evt-007","timestamp":"2026-09-10T09:15:00Z","principal":"analyst01","event_type":"logon_success","source":"198.51.100.24","success":true,"known_device":false,"known_location":false,"mfa_satisfied":true},
+  {"event_id":"evt-008","timestamp":"2026-09-10T10:30:00Z","principal":"tier0-admin","event_type":"privileged_logon","source":"10.10.5.20","success":true,"privileged":true,"mfa_satisfied":false,"known_device":true,"known_location":true},
+  {"event_id":"evt-009","timestamp":"2026-09-10T11:10:00Z","principal":"engineer02","event_type":"logon_success","source":"10.10.30.10","success":true,"known_device":true,"known_location":true,"mfa_satisfied":true}
+]
