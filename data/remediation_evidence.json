@@ -1,0 +1,5 @@
+[
+  {"finding_id":"AD-001-demo","state":"ready_for_validation","owner":"Identity Engineering","change_reference":"CHG-SYN-1001","before_value":"privileged MFA optional","after_value":"privileged MFA required","validation_method":"review fresh authentication telemetry for MFA satisfaction","evidence_complete":true,"control_effective":true},
+  {"finding_id":"AD-003-demo","state":"closed","owner":"Directory Services","change_reference":"CHG-SYN-1002","before_value":"unconstrained delegation enabled","after_value":"unconstrained delegation enabled","validation_method":"directory configuration export comparison","evidence_complete":true,"control_effective":false},
+  {"finding_id":"AD-005-demo","state":"in_progress","owner":"IAM Operations","change_reference":"CHG-SYN-1003","before_value":"stale account enabled","after_value":"stale account disabled","validation_method":"fresh directory inventory plus application dependency validation","evidence_complete":false,"control_effective":true}
+]
