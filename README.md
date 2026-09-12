@@ -1,19 +1,33 @@
 # Active Directory Security Lab
 
-A recruiter-facing defensive identity-security engineering project for analyzing **Active Directory attack paths, privileged-access relationships, directory hygiene, authentication risk, delegation exposure, and remediation validation** using synthetic/offline data.
+A flagship defensive **Active Directory / Identity Security Engineering** project for analyzing directory posture, privilege paths, authentication risk, delegation exposure, and remediation validation using synthetic offline data.
+
+> **Recruiter quick review:** start with [`docs/recruiter-review.md`](docs/recruiter-review.md), then inspect the example report, control-validation matrix, core modules, tests, and least-privilege CI workflow.
 
 The lab is intentionally safe: it does not perform password attacks, credential dumping, ticket abuse, exploitation, persistence, directory modification, or live tenant/domain targeting.
 
-## Problem Statement
+## Why This Project Matters
 
 Identity compromise often depends on combinations of weak authentication controls, stale accounts, unmanaged service identities, risky delegation, excessive trust relationships, and incomplete remediation evidence rather than one isolated vulnerability. Security teams need repeatable ways to inventory those conditions, explain why they matter, prioritize remediation, and prove that risk has actually been reduced.
 
-This project now implements four complementary defensive capabilities:
+This project implements four complementary defensive capabilities:
 
 1. **Attack-path analysis** — models synthetic identity relationships as a directed graph and identifies shortest paths toward privileged assets.
 2. **Directory posture assessment** — evaluates identity/computer metadata against deterministic security controls and produces evidence-driven findings.
 3. **Identity-risk analytics** — evaluates exported authentication telemetry for repeated failures, unfamiliar-context successes, and privileged logons without MFA evidence.
 4. **Remediation validation** — rejects administrative closure when accountable ownership, changed control state, validation evidence, or demonstrated control effectiveness is missing.
+
+## Recruiter Signal at a Glance
+
+| Area | What is demonstrated |
+|---|---|
+| Identity security engineering | Directory controls, authentication-risk analysis, ownership and lifecycle reasoning |
+| Attack-path reasoning | Directed graph analysis of synthetic privilege relationships |
+| Detection engineering | Deterministic authentication rules with evidence and ATT&CK context |
+| Risk communication | Explainable severities, rationale, limitations, and analyst-facing reports |
+| Remediation governance | Evidence-driven validation rather than ticket-state trust |
+| Secure engineering | Fail-closed validation, deterministic IDs, unit tests, least-privilege CI |
+| Documentation | Architecture, methodology, control matrix, remediation guidance, example outputs |
 
 ## Architecture
 
@@ -26,7 +40,14 @@ Synthetic remediation evidence ─> remediation_validator.py -> validation decis
                                       └──> reporting.py / example reports
 ```
 
-See [`docs/architecture.md`](docs/architecture.md), [`docs/methodology.md`](docs/methodology.md), and [`docs/identity-risk-model.md`](docs/identity-risk-model.md).
+Design references:
+
+- [`docs/architecture.md`](docs/architecture.md) — component boundaries and data flow
+- [`docs/methodology.md`](docs/methodology.md) — assessment and remediation methodology
+- [`docs/identity-risk-model.md`](docs/identity-risk-model.md) — telemetry analytics and limits
+- [`docs/attack-path-remediation.md`](docs/attack-path-remediation.md) — privilege-path remediation guidance
+- [`docs/control-validation-matrix.md`](docs/control-validation-matrix.md) — control, evidence, remediation, and revalidation mapping
+- [`docs/recruiter-review.md`](docs/recruiter-review.md) — concise technical review path
 
 ## Implemented Security Controls
 
@@ -55,15 +76,18 @@ Every finding exposes evidence, remediation guidance, and a measurable revalidat
 
 ```text
 .github/workflows/security-quality.yml   Compile, unit-test and report smoke-test CI
+
 data/synthetic_identity_edges.csv        Synthetic relationship graph
 data/synthetic_directory_inventory.json  Synthetic AD posture inventory
-data/synthetic_auth_events.json           Synthetic authentication telemetry
+data/synthetic_auth_events.json          Synthetic authentication telemetry
 data/remediation_evidence.json            Synthetic remediation evidence
 
 docs/architecture.md                     Component and trust-boundary design
 docs/methodology.md                       Assessment/remediation methodology
 docs/attack-path-remediation.md           Attack-path remediation guidance
 docs/identity-risk-model.md               Identity analytics design and limits
+docs/control-validation-matrix.md         Control/evidence/revalidation matrix
+docs/recruiter-review.md                  5-minute technical review guide
 
 src/attack_path_analyzer.py              Defensive graph/path utility
 src/ad_posture.py                         Directory posture model and controls
@@ -96,26 +120,26 @@ Run all tests:
 python -m unittest discover -s tests -v
 ```
 
-The bundled datasets contain fictional principals, hosts, owners and relationships only.
+The bundled datasets contain fictional principals, hosts, owners, events, and relationships only.
 
-## Detection and Risk Context
+## Detection and MITRE ATT&CK Context
 
-The lab maps defensive observations to MITRE ATT&CK where useful:
+The lab maps defensive observations to ATT&CK where useful:
 
-- **T1078 — Valid Accounts:** stale identities, unfamiliar-context successful authentication, and weak privileged authentication increase valid-account abuse exposure.
+- **T1078 — Valid Accounts:** stale identities, unfamiliar-context successful authentication, and weak authentication controls increase valid-account abuse exposure.
 - **T1078.002 — Domain Accounts:** privileged domain authentication without MFA evidence is treated as a critical control gap.
 - **T1110.003 — Password Spraying:** repeated failed authentication is modeled as a defensive detection condition only; this repository does not execute password spraying.
 - **T1550.003 — Pass the Ticket:** delegation configuration is reviewed because Kerberos trust design affects ticket exposure paths.
 - **T1003 — OS Credential Dumping:** reversible password storage represents a credential-protection weakness.
 - **T1555 — Credentials from Password Stores:** long-lived static credentials increase impact if secrets are disclosed.
-- Existing attack-path documentation also references **T1087**, **T1069**, **T1021**, and **T1098** as defensive discovery/access context.
+- Attack-path documentation also references **T1087**, **T1069**, **T1021**, and **T1098** as defensive discovery/access context.
 
 These mappings are threat-model references only; they do **not** claim that compromise or attacker activity occurred.
 
-## Remediation and Validation Workflow
+## Remediation and Revalidation Workflow
 
 1. Establish an approved inventory and telemetry scope.
-2. Normalize directory objects, relationships, and authentication events into the lab schemas.
+2. Normalize directory objects, relationships, and authentication events into the documented schemas.
 3. Run posture, path, and identity-risk analysis.
 4. Review evidence and business context before accepting severity.
 5. Assign accountable remediation owners.
@@ -124,7 +148,9 @@ These mappings are threat-model references only; they do **not** claim that comp
 8. Re-export fresh evidence and rerun the assessment.
 9. Close only when the control state changed and effectiveness is demonstrated.
 
-The remediation validator deliberately distinguishes `ready_for_validation`, `validated`, `needs_evidence`, and `invalid_closure`. A ticket marked closed does not override missing evidence.
+The remediation validator deliberately distinguishes `ready_for_validation`, `validated`, `needs_evidence`, and `invalid_closure`. A ticket marked closed does not override missing technical evidence.
+
+The [`control-validation matrix`](docs/control-validation-matrix.md) makes the evidence standard explicit for every implemented control and analytic rule.
 
 ## Engineering Design Decisions
 
@@ -138,7 +164,9 @@ The remediation validator deliberately distinguishes `ready_for_validation`, `va
 
 ## CI/CD Security Quality
 
-The GitHub Actions workflow uses read-only repository permissions and performs Python source/test compilation, `unittest` discovery, synthetic assessment generation, and report-content smoke validation. A workflow being present does not imply a run passed; status should be checked for the relevant commit.
+The GitHub Actions workflow uses read-only repository permissions and performs Python source/test compilation, `unittest` discovery, synthetic assessment generation, and report-content smoke validation.
+
+CI status is intentionally treated as **commit-specific evidence**. The presence of a workflow or a historical successful run is not presented as proof that a newer commit is green; the exact commit must be checked before making that claim.
 
 ## Limitations
 
@@ -151,15 +179,16 @@ The identity analytics are deterministic control checks rather than UEBA. They d
 - Active Directory / identity security engineering
 - Graph-based privilege-path reasoning
 - Authentication telemetry and privileged-access analysis
-- Security control design and evidence modeling
+- Detection engineering and evidence modeling
+- Security control design and risk communication
 - MITRE ATT&CK contextual mapping
 - Python defensive automation
 - Deterministic risk prioritization
 - Unit-test design
 - Synthetic security-data modeling
 - Remediation and revalidation workflow design
-- CI/CD quality controls
-- Technical security documentation and risk communication
+- CI/CD security quality controls
+- Technical architecture and methodology documentation
 
 ## Roadmap
 
